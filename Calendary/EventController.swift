@@ -14,17 +14,18 @@ class EventController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Coming Events"
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fruits.count
     }
     
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Section \(section)"
     }
     
@@ -34,6 +35,7 @@ class EventController: UITableViewController {
         let fruit = fruits[indexPath.row]
         
         cell.textLabel?.text = "Section \(indexPath.section), Row \(indexPath.row): \(fruit)"
+        cell.detailTextLabel?.text = fruit
         
         return cell
     }
