@@ -12,6 +12,7 @@ import EventKit
 class NewCalendarController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var addCalendarField: UITextField!
+    @IBOutlet var addColorField: UITextField!
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
@@ -46,6 +47,7 @@ class NewCalendarController: UIViewController, UITextFieldDelegate {
         let eventStore = EKEventStore();
         let newCalendar = EKCalendar(for: .event, eventStore: eventStore)
         newCalendar.title = addCalendarField.text!
+        
         if addCalendarField.text?.count == 0 {
             let alert = UIAlertController(title: "Calendar Name cannot be empty!", message: newCalendar.title, preferredStyle: .alert)
             let textAction = UIAlertAction(title: "Ok!", style: .default, handler: nil)

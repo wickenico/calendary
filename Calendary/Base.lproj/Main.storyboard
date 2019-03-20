@@ -10,16 +10,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Event Controller-->
+        <!--Calendar Controller-->
         <scene sceneID="q1B-C1-fmW">
             <objects>
-                <tableViewController id="Qso-sK-nWO" customClass="EventController" customModule="Calendary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Qso-sK-nWO" customClass="CalendarController" customModule="Calendary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="eCs-SD-Jsz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" textLabel="SWd-7s-dbe" detailTextLabel="FLl-jX-pSc" rowHeight="61" style="IBUITableViewCellStyleSubtitle" id="b5F-D2-FfC">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="15" reuseIdentifier="EventCell" textLabel="SWd-7s-dbe" detailTextLabel="FLl-jX-pSc" rowHeight="61" style="IBUITableViewCellStyleSubtitle" id="b5F-D2-FfC">
                                 <rect key="frame" x="0.0" y="28" width="414" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="b5F-D2-FfC" id="83E-lg-aWN">
@@ -84,20 +84,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OF0-4v-SEa">
-                                <rect key="frame" x="8" y="96" width="398" height="709"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OF0-4v-SEa">
+                                <rect key="frame" x="8" y="103" width="398" height="30"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6aM-KT-apZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="709"/>
+                                    <stackView opaque="NO" contentMode="top" distribution="fillProportionally" alignment="lastBaseline" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6aM-KT-apZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calendar Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vk0-xP-Qlm">
-                                                <rect key="frame" x="0.0" y="3.5" width="118" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="172.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="add new calendar..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RJ4-K3-Xda">
-                                                <rect key="frame" x="126" y="0.0" width="272" height="30"/>
+                                                <rect key="frame" x="180.5" y="0.0" width="217.5" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -107,6 +107,9 @@
                                             </textField>
                                         </subviews>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="omm-vs-riT"/>
+                                        </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="oVJ-Lt-r2i" appends="YES" id="EjK-f9-YBf"/>
                                         </connections>
@@ -117,9 +120,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rGs-7v-ryO" firstAttribute="trailing" secondItem="OF0-4v-SEa" secondAttribute="trailing" constant="8" id="6jc-Oz-Xa9"/>
-                            <constraint firstItem="OF0-4v-SEa" firstAttribute="top" secondItem="rGs-7v-ryO" secondAttribute="top" constant="8" id="8lV-Cw-cgV"/>
+                            <constraint firstItem="OF0-4v-SEa" firstAttribute="top" secondItem="rGs-7v-ryO" secondAttribute="top" constant="15" id="C48-q6-XsP"/>
                             <constraint firstItem="OF0-4v-SEa" firstAttribute="leading" secondItem="rGs-7v-ryO" secondAttribute="leading" constant="8" id="TVj-gX-XKR"/>
-                            <constraint firstItem="rGs-7v-ryO" firstAttribute="bottom" secondItem="OF0-4v-SEa" secondAttribute="bottom" constant="8" id="l8E-c2-Gau"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rGs-7v-ryO"/>
                     </view>
@@ -161,17 +163,20 @@
             </objects>
             <point key="canvasLocation" x="128.98550724637681" y="147.99107142857142"/>
         </scene>
-        <!--View Controller-->
+        <!--Event Controller-->
         <scene sceneID="eG2-nh-lJ9">
             <objects>
-                <viewController id="3ut-bW-oRf" sceneMemberID="viewController">
+                <viewController id="3ut-bW-oRf" customClass="EventController" customModule="Calendary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vVg-CG-MzI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="I0O-NX-Nce"/>
                     </view>
-                    <navigationItem key="navigationItem" id="26U-t6-fAB"/>
+                    <navigationItem key="navigationItem" id="26U-t6-fAB">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="S4v-Hx-oYv"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3nh-ro-A4x"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8L-7q-Wpa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -196,11 +201,11 @@
             </objects>
             <point key="canvasLocation" x="905.79710144927549" y="-254.46428571428569"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Events-->
         <scene sceneID="7Gg-w6-uP6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QQx-yH-1yi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="cU8-av-HtK"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="report_card" selectedImage="report_card" id="cU8-av-HtK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dJe-89-Lg3">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -236,6 +241,7 @@
     </scenes>
     <resources>
         <image name="calendar" width="30" height="30"/>
+        <image name="report_card" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="UnJ-IT-mo3"/>
