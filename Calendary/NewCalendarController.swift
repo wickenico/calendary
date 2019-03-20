@@ -12,7 +12,6 @@ import EventKit
 class NewCalendarController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var addCalendarField: UITextField!
-    @IBOutlet var addColorField: UITextField!
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)

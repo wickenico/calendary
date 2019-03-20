@@ -24,7 +24,7 @@ class CalendarController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Your Calendars"
+        self.title = "Calendars"
         
         //self.checkAccess()
         self.loadCalendars()
@@ -96,7 +96,7 @@ class CalendarController: UITableViewController {
     //    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell", for: indexPath)
         
    
             let calendarName = calendars[indexPath.row].title
