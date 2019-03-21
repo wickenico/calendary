@@ -65,21 +65,6 @@ class CalendarController: UITableViewController {
         })
     }
     
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//    
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "Section \(section)"
-//    }
-//    
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let vw = UIView()
-//        vw.backgroundColor = UIColor.gray
-//        
-//        return vw
-//    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
             return calendars.count

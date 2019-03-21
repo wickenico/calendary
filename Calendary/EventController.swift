@@ -23,7 +23,7 @@ class EventController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Events"
-//        self.loadEvents()
+        //        self.loadEvents()
         self.refreshControl?.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
@@ -60,38 +60,7 @@ class EventController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        checkCalendarAuthorizationStatus()
-    }
-    func checkCalendarAuthorizationStatus() {
-        let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
-        switch (status) {
-        case EKAuthorizationStatus.notDetermined:
-            // This happens on first-run
-            requestAccessToCalendar()
-        case EKAuthorizationStatus.authorized:
-            // Yo!! You got a access to use Calendar now go on and create/load all calendar list.
-            //self.fetchEvents()
-            self.refreshTableView()
-            break
-        case EKAuthorizationStatus.restricted, EKAuthorizationStatus.denied:
-            // We need to create another view which helps user to give us permission
-            break
-        }
-    }
-    func requestAccessToCalendar() {
-        eventStore.requestAccess(to: EKEntityType.event, completion: {
-            (accessGranted: Bool, error: Error?) in
-            if accessGranted == true {
-                DispatchQueue.main.async(execute: {
-                    // Yo!! You got a access to use Calendar now go on and create/load all calendar list.
-                    self.refreshTableView()
-                })
-            } else {
-                DispatchQueue.main.async(execute: {
-                    // We need to create another view which helps user to give us permission
-                })
-            }
-        })
+        self.refreshTableView()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -166,7 +135,12 @@ class EventController: UITableViewController {
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let id = events![indexPath.row]
+        var identifier = id.calendarItemIdentifier
+        let calendarItem = eventStore.calendarItem(withIdentifier: identifier)
+        let url = calendarItem!.url
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+    }
 }
-
-
-
