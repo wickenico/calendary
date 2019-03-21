@@ -20,7 +20,6 @@ class NewCalendarController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Add Calendar"
-        addCalendarField.text = ""
         
         // Do any additional setup after loading the view.
     }
@@ -40,6 +39,10 @@ class NewCalendarController: UIViewController, UITextFieldDelegate {
         
         view.endEditing(true)
         
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
     }
     
     @IBAction func saveNewCalendarButton(_ sender: UIBarButtonItem) {
@@ -62,7 +65,6 @@ class NewCalendarController: UIViewController, UITextFieldDelegate {
             alert.addAction(successAction)
             self.present(alert, animated: true, completion: nil)
             print("Calendar \(newCalendar.title) added")
-            addCalendarField.text = ""
         } catch {
             let alert = UIAlertController(title: "Calendar could not save", message: (error as NSError).localizedDescription, preferredStyle: .alert)
             let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)

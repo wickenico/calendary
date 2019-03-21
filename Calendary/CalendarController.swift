@@ -26,8 +26,6 @@ class CalendarController: UITableViewController {
         super.viewDidLoad()
         self.title = "Calendars"
         
-        //self.checkAccess()
-        self.loadCalendars()
         self.refreshControl?.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
@@ -44,7 +42,6 @@ class CalendarController: UITableViewController {
         case EKAuthorizationStatus.authorized:
             // Yo!! You got a access to use Calendar now go on and create/load all calendar list.
             //self.fetchEvents()
-            self.loadCalendars()
             self.refreshTableView()
             break
         case EKAuthorizationStatus.restricted, EKAuthorizationStatus.denied:
@@ -58,7 +55,6 @@ class CalendarController: UITableViewController {
             if accessGranted == true {
                 DispatchQueue.main.async(execute: {
                     // Yo!! You got a access to use Calendar now go on and create/load all calendar list.
-                    self.loadCalendars()
                     self.refreshTableView()
                 })
             } else {
@@ -116,6 +112,7 @@ class CalendarController: UITableViewController {
         //
     }
     @objc func refreshTableView() {
+        self.loadCalendars()
         self.tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
@@ -174,17 +171,17 @@ class CalendarController: UITableViewController {
         let calendarTitle = rowCalendar.title
         print(calendarTitle)
         
-        var oneDayAgoComponents = DateComponents()
-        oneDayAgoComponents.day = -1
-        let oneDayAgo = calendar.date(byAdding: oneDayAgoComponents, to: Date())
+        var startDateComponents = DateComponents()
+        startDateComponents.day = 0
+        let startDate = calendar.date(byAdding: startDateComponents, to: Date())
         
-        var oneDayFromNowComponents = DateComponents()
-        oneDayFromNowComponents.day = 7
-        let oneDayFromNow = calendar.date(byAdding: oneDayFromNowComponents, to: Date())
+        var endDateComponents = DateComponents()
+        endDateComponents.day = 7
+        let endDate = calendar.date(byAdding: endDateComponents, to: Date())
         
         var predicate: NSPredicate? = nil
-        if let anAgo = oneDayAgo, let aNow = oneDayFromNow {
-            predicate = eventStore.predicateForEvents(withStart: anAgo, end: aNow, calendars: [rowCalendar])
+        if let startDate = startDate, let endDate = endDate {
+            predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [rowCalendar])
         }
         
         var events: [EKEvent]? = nil

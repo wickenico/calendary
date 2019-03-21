@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class EventController: UIViewController, UITableViewDataSource {
+class EventController: UITableViewController {
     
     
     var calendar: EKCalendar!
@@ -23,9 +23,40 @@ class EventController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Events"
-        loadEvents()
+//        self.loadEvents()
+        self.refreshControl?.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "de_DE")
+        dateFormatter.dateFormat = "dd.MM.yyyy"
         
+        let startDateComponents = DateComponents()
+        let todayDate = Calendar.current.date(byAdding: startDateComponents, to: Date())
+        let startDate = dateFormatter.string(from: todayDate!)
+        
+        var endDateComponents = DateComponents()
+        endDateComponents.day = 14
+        let twoWeeksDate = Calendar.current.date(byAdding: endDateComponents, to: Date())
+        let endDate = dateFormatter.string(from: twoWeeksDate!)
+        
+        return "\(startDate) to \(endDate)"
+    }
+    
+    // move calendars in tableView
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedCalendar = self.events?[sourceIndexPath.row]
+        events?.remove(at: sourceIndexPath.row)
+        events?.insert(movedCalendar!, at: destinationIndexPath.row)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,7 +71,7 @@ class EventController: UIViewController, UITableViewDataSource {
         case EKAuthorizationStatus.authorized:
             // Yo!! You got a access to use Calendar now go on and create/load all calendar list.
             //self.fetchEvents()
-            self.loadEvents()
+            self.refreshTableView()
             break
         case EKAuthorizationStatus.restricted, EKAuthorizationStatus.denied:
             // We need to create another view which helps user to give us permission
@@ -53,8 +84,8 @@ class EventController: UIViewController, UITableViewDataSource {
             if accessGranted == true {
                 DispatchQueue.main.async(execute: {
                     // Yo!! You got a access to use Calendar now go on and create/load all calendar list.
-                    self.loadEvents()
-                            })
+                    self.refreshTableView()
+                })
             } else {
                 DispatchQueue.main.async(execute: {
                     // We need to create another view which helps user to give us permission
@@ -63,7 +94,7 @@ class EventController: UIViewController, UITableViewDataSource {
         })
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let events = events {
             return events.count
         }
@@ -71,7 +102,7 @@ class EventController: UIViewController, UITableViewDataSource {
         return 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath)
         
         let dateFormatter = DateFormatter()
@@ -83,27 +114,59 @@ class EventController: UIViewController, UITableViewDataSource {
         return cell
     }
     
-    func loadEvents() {
-        // Create a date formatter instance to use for converting a string to a date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        // Create start and end date NSDate instances to build a predicate for which events to select
-        let startDate = dateFormatter.date(from: "2019-03-01")
-        let endDate = dateFormatter.date(from: "2019-03-31")
-        
-        if let startDate = startDate, let endDate = endDate {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let deleteEvent = self.events?.remove(at: indexPath.row)
+            let alertTitle = "Delete \(String(describing: deleteEvent?.title)) ?"
+            let alertMessage = " Do you really want to delete this event?"
+            let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
             
-            // Use an event store instance to create and properly configure an NSPredicate
-            let eventsPredicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                (action) -> Void in
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                do {
+                    try self.eventStore.remove(deleteEvent!, span: .thisEvent)
+                } catch {
+                    print("shit")
+                }
+            })
+            alert.addAction(deleteAction)
             
-            // Use the configured NSPredicate to find and return events in the store that match
-            self.events = eventStore.events(matching: eventsPredicate).sorted(){
-                (e1: EKEvent, e2: EKEvent) -> Bool in
-                return e1.startDate.compare(e2.startDate) == ComparisonResult.orderedAscending
-            }
+            present(alert, animated: true, completion: nil)
         }
     }
+    
+    func loadEvents() {
+        // Create a date formatter instance to use for converting a string to a date
+        let calendar = Calendar.current
+        
+        // Create start and end date NSDate instances to build a predicate for which events to select
+        var startDateComponents = DateComponents()
+        startDateComponents.day = 0
+        let startDate = calendar.date(byAdding: startDateComponents, to: Date())
+        
+        var endDateComponents = DateComponents()
+        endDateComponents.day = 14
+        let endDate = calendar.date(byAdding: endDateComponents, to: Date())
+        
+        // Use an event store instance to create and properly configure an NSPredicate
+        let eventsPredicate = eventStore.predicateForEvents(withStart: startDate!, end: endDate!, calendars: nil)
+        
+        // Use the configured NSPredicate to find and return events in the store that match
+        self.events = eventStore.events(matching: eventsPredicate).sorted(){
+            (e1: EKEvent, e2: EKEvent) -> Bool in
+            return e1.startDate.compare(e2.startDate) == ComparisonResult.orderedAscending
+        }
+    }
+    
+    @objc func refreshTableView() {
+        self.loadEvents()
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
+    }
 }
+
 
 
