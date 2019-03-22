@@ -171,7 +171,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="zVV-ck-cFP">
-                                <rect key="frame" x="8" y="108" width="398" height="502"/>
+                                <rect key="frame" x="8" y="108" width="398" height="543"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Wg2-s6-qFD">
                                         <rect key="frame" x="0.0" y="0.0" width="398" height="30"/>
@@ -194,45 +194,61 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6pH-Ee-ji1">
-                                        <rect key="frame" x="0.0" y="50" width="398" height="216"/>
+                                        <rect key="frame" x="0.0" y="50" width="398" height="236.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErE-UA-Wv2">
-                                                <rect key="frame" x="0.0" y="0.0" width="78" height="216"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="NVk-P2-vyI">
-                                                <rect key="frame" x="78" y="0.0" width="320" height="216"/>
-                                                <date key="date" timeIntervalSinceReferenceDate="574865793.81544197">
-                                                    <!--2019-03-21 12:56:33 +0000-->
-                                                </date>
-                                                <locale key="locale" localeIdentifier="de_DE"/>
-                                                <connections>
-                                                    <action selector="startDatePickerChanged:" destination="Sz2-Io-ygn" eventType="valueChanged" id="B7U-56-oAl"/>
-                                                </connections>
-                                            </datePicker>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V6k-LO-sTj">
+                                                <rect key="frame" x="0.0" y="0.0" width="398" height="236.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErE-UA-Wv2">
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="NVk-P2-vyI">
+                                                        <rect key="frame" x="0.0" y="20.5" width="398" height="216"/>
+                                                        <date key="date" timeIntervalSinceReferenceDate="574865793.81544197">
+                                                            <!--2019-03-21 12:56:33 +0000-->
+                                                        </date>
+                                                        <locale key="locale" localeIdentifier="de_DE"/>
+                                                        <connections>
+                                                            <action selector="startDatePickerChanged:" destination="Sz2-Io-ygn" eventType="valueChanged" id="B7U-56-oAl"/>
+                                                        </connections>
+                                                    </datePicker>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="ErE-UA-Wv2" firstAttribute="centerX" secondItem="V6k-LO-sTj" secondAttribute="centerX" id="T7B-Ca-1ss"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FOg-5w-8Dj">
-                                        <rect key="frame" x="0.0" y="286" width="398" height="216"/>
+                                        <rect key="frame" x="0.0" y="306.5" width="398" height="236.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98f-al-ohY">
-                                                <rect key="frame" x="0.0" y="0.0" width="70" height="216"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="HL2-oY-AqH">
-                                                <rect key="frame" x="70" y="0.0" width="328" height="216"/>
-                                                <date key="date" timeIntervalSinceReferenceDate="574866523.56637895">
-                                                    <!--2019-03-21 13:08:43 +0000-->
-                                                </date>
-                                                <locale key="locale" localeIdentifier="de_DE"/>
-                                                <connections>
-                                                    <action selector="endDatePickerChanged:" destination="Sz2-Io-ygn" eventType="valueChanged" id="3CB-0s-i4w"/>
-                                                </connections>
-                                            </datePicker>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zhk-Cx-P4d">
+                                                <rect key="frame" x="0.0" y="0.0" width="398" height="236.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98f-al-ohY">
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="HL2-oY-AqH">
+                                                        <rect key="frame" x="0.0" y="20.5" width="398" height="216"/>
+                                                        <date key="date" timeIntervalSinceReferenceDate="574866523.56637895">
+                                                            <!--2019-03-21 13:08:43 +0000-->
+                                                        </date>
+                                                        <locale key="locale" localeIdentifier="de_DE"/>
+                                                        <connections>
+                                                            <action selector="endDatePickerChanged:" destination="Sz2-Io-ygn" eventType="valueChanged" id="3CB-0s-i4w"/>
+                                                        </connections>
+                                                    </datePicker>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="98f-al-ohY" firstAttribute="centerX" secondItem="zhk-Cx-P4d" secondAttribute="centerX" id="Ris-So-SbL"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -294,7 +310,7 @@
         <scene sceneID="JXf-sJ-Eko">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vx0-TU-mUC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" selectedImage="calendar" id="VtS-fh-mZQ"/>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar-29" selectedImage="calendar-29" id="VtS-fh-mZQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rJT-dP-pnm">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -313,7 +329,7 @@
         <scene sceneID="7Gg-w6-uP6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QQx-yH-1yi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Events" image="report_card" selectedImage="report_card" id="cU8-av-HtK"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="event-29" selectedImage="event-29" id="cU8-av-HtK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dJe-89-Lg3">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -405,8 +421,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="calendar" width="30" height="30"/>
-        <image name="report_card" width="30" height="30"/>
+        <image name="calendar-29" width="29" height="29"/>
+        <image name="event-29" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bhq-uZ-CkA"/>

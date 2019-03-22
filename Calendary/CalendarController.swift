@@ -88,8 +88,6 @@ class CalendarController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        let calendarTitle = calendars![indexPath.row].title
-        //        print(calendarTitle)
         let calendar = Calendar.current
         print("Current \(calendar)")
         
@@ -105,6 +103,9 @@ class CalendarController: UITableViewController {
         endDateComponents.day = 7
         let endDate = calendar.date(byAdding: endDateComponents, to: Date())
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.full
+        
         var predicate: NSPredicate? = nil
         if let startDate = startDate, let endDate = endDate {
             predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [rowCalendar])
@@ -117,11 +118,12 @@ class CalendarController: UITableViewController {
             for event in events! {
                 print(event.title)
                 let eventTitleWithoutOptional = event.title.replacingOccurrences(of: "Optional", with: "")
+                let alertDate = dateFormatter.string(from: event.startDate)
                 let alertTitle = "Next Event in \(calendarTitle):"
-                let alertMessage = " The next Event is \(eventTitleWithoutOptional)"
+                let alertMessage = " The next Event is \(eventTitleWithoutOptional) on \(alertDate)"
                 let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "Thanks", style: .default, handler: nil)
-                alert.addAction(cancelAction)
+                let defaultAction = UIAlertAction(title: "Thanks", style: .default, handler: nil)
+                alert.addAction(defaultAction)
                 present(alert, animated: true, completion: nil)
             }
         }

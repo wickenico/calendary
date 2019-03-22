@@ -60,6 +60,7 @@ class EventController: UITableViewController {
         
         cell.textLabel?.text = events?[(indexPath as NSIndexPath).row].title
         cell.detailTextLabel?.text = dateFormatter.string(from: (events?[indexPath.row].startDate)!)
+        cell.selectionStyle = .none
         return cell
     }
     
