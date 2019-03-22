@@ -50,7 +50,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="31S-fO-c23">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="xmD-KF-2bQ">
+                        <barButtonItem key="leftBarButtonItem" id="xmD-KF-2bQ">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZFt-f7-CXS">
                                 <rect key="frame" x="20" y="6" width="30" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -60,9 +60,9 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="E5d-sp-ltD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="E5d-sp-ltD">
                             <connections>
-                                <action selector="addNewItem:" destination="Qso-sK-nWO" id="58h-8b-ean"/>
+                                <action selector="addNewRow:" destination="Qso-sK-nWO" id="zxS-Ry-yNK"/>
                                 <segue destination="noZ-Rq-bUI" kind="show" id="UnJ-IT-mo3"/>
                             </connections>
                         </barButtonItem>
@@ -103,7 +103,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
-                                                    <outlet property="delegate" destination="noZ-Rq-bUI" id="8LI-IZ-Q5B"/>
+                                                    <outlet property="delegate" destination="noZ-Rq-bUI" id="HAw-we-wwE"/>
                                                 </connections>
                                             </textField>
                                         </subviews>
@@ -188,7 +188,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
-                                                    <outlet property="delegate" destination="Sz2-Io-ygn" id="39z-OQ-kyv"/>
+                                                    <outlet property="delegate" destination="Sz2-Io-ygn" id="Zfz-fx-kFI"/>
                                                 </connections>
                                             </textField>
                                         </subviews>

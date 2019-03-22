@@ -30,15 +30,22 @@ class NewEventController: UIViewController, UITextFieldDelegate {
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .none
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "New Event"
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
+    @objc func DismissKeyboard(){
+        //Causes the view to resign from the status of first responder.
+        view.endEditing(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,21 +54,17 @@ class NewEventController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        addEventField.resignFirstResponder()
+        textField.resignFirstResponder()
         return true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        view.endEditing(true)
-        
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
     }
     
     @IBAction func saveEventAction(_ sender: UIBarButtonItem) {
         let eventStore = EKEventStore()
         let newEvent = EKEvent(eventStore: eventStore)
-        
         let calendars = eventStore.calendars(for: .event)
         
         for calendar in calendars {
@@ -79,19 +82,14 @@ class NewEventController: UIViewController, UITextFieldDelegate {
                     let successAction = UIAlertAction(title: "Nice!", style: .default, handler: nil)
                     alert.addAction(successAction)
                     self.present(alert, animated: true, completion: nil)
-                    print("Calendar \(newEvent.title) added")
-
+                    print("Calendar \(String(describing: newEvent.title)) added")
                 } catch {
                     let alert = UIAlertController(title: "Event could not save", message: (error as NSError).localizedDescription, preferredStyle: .alert)
                     let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alert.addAction(OKAction)
                     self.present(alert,animated: true,completion: nil)
-                    
                 }
             }
         }
-        
-        
-        
     }
 }

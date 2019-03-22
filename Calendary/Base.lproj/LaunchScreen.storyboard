@@ -27,10 +27,18 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="v1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0t-UX-i5Y">
+                                <rect key="frame" x="191.5" y="811" width="31" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
+                            <constraint firstItem="Z0t-UX-i5Y" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="88k-2g-khf"/>
                             <constraint firstItem="n4r-Zv-8tm" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="A23-Bv-6xL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Z0t-UX-i5Y" secondAttribute="bottom" constant="30" id="YIu-W1-IaO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rxg-5H-Zjx" secondAttribute="bottom" constant="130" id="Z5f-HG-1ZB"/>
                             <constraint firstItem="n4r-Zv-8tm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="114" id="hRR-SQ-agf"/>
                             <constraint firstItem="rxg-5H-Zjx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="l0K-ny-f4r"/>

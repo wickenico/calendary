@@ -11,28 +11,35 @@ import EventKit
 
 class EventController: UITableViewController {
     
-    
+    let eventStore = EKEventStore()
     var calendar: EKCalendar!
     var events: [EKEvent]?
-    let eventStore = EKEventStore()
     
-    @IBAction func addEventButton(_ sender: UIBarButtonItem) {
-        
+    @IBAction func addEventButton(_ sender: UIBarButtonItem) {}
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Events"
-        //        self.loadEvents()
         self.refreshControl?.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.refreshTableView()
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (events?.count)!
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "de_DE")
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateStyle = DateFormatter.Style.long
         
         let startDateComponents = DateComponents()
         let todayDate = Calendar.current.date(byAdding: startDateComponents, to: Date())
@@ -46,37 +53,10 @@ class EventController: UITableViewController {
         return "\(startDate) to \(endDate)"
     }
     
-    // move calendars in tableView
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedCalendar = self.events?[sourceIndexPath.row]
-        events?.remove(at: sourceIndexPath.row)
-        events?.insert(movedCalendar!, at: destinationIndexPath.row)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        navigationItem.leftBarButtonItem = editButtonItem
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.refreshTableView()
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let events = events {
-            return events.count
-        }
-        
-        return 0
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath)
-        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = DateFormatter.Style.short
-        
+        dateFormatter.dateStyle = DateFormatter.Style.full
         
         cell.textLabel?.text = events?[(indexPath as NSIndexPath).row].title
         cell.detailTextLabel?.text = dateFormatter.string(from: (events?[indexPath.row].startDate)!)
@@ -85,8 +65,9 @@ class EventController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let deleteEvent = self.events?.remove(at: indexPath.row)
-            let alertTitle = "Delete \(String(describing: deleteEvent?.title)) ?"
+            let altertEventTitle = events?[indexPath.row].title
+            
+            let alertTitle = "Delete \(String(describing: altertEventTitle)) ?"
             let alertMessage = " Do you really want to delete this event?"
             let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -94,17 +75,39 @@ class EventController: UITableViewController {
             
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
                 (action) -> Void in
+                let deleteEvent = self.events?.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 do {
                     try self.eventStore.remove(deleteEvent!, span: .thisEvent)
                 } catch {
-                    print("shit")
+                    print("Could not delete Event")
                 }
             })
             alert.addAction(deleteAction)
             
             present(alert, animated: true, completion: nil)
         }
+    }
+    
+    // move calendars in tableView
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedCalendar = self.events?[sourceIndexPath.row]
+        events?.remove(at: sourceIndexPath.row)
+        events?.insert(movedCalendar!, at: destinationIndexPath.row)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //        let id = events![indexPath.row]
+        //        var identifier = id.calendarItemIdentifier
+        //        let calendarItem = eventStore.calendarItem(withIdentifier: identifier)
+        //        let url = calendarItem!.url
+        //        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+    }
+    
+    @objc func refreshTableView() {
+        self.loadEvents()
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     func loadEvents() {
@@ -128,19 +131,5 @@ class EventController: UITableViewController {
             (e1: EKEvent, e2: EKEvent) -> Bool in
             return e1.startDate.compare(e2.startDate) == ComparisonResult.orderedAscending
         }
-    }
-    
-    @objc func refreshTableView() {
-        self.loadEvents()
-        self.tableView.reloadData()
-        self.refreshControl?.endRefreshing()
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let id = events![indexPath.row]
-        var identifier = id.calendarItemIdentifier
-        let calendarItem = eventStore.calendarItem(withIdentifier: identifier)
-        let url = calendarItem!.url
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
 }
